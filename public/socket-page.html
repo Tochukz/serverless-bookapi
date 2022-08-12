@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Socket Test</title>
+    <link rel="stylesheet" href="/css/bootstrap.4-3-1.min.css" />
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>    
+</head>
+<body>
+    <div class="container-fuid">
+        <div class="row mt-4">
+            <div class="col-sm-4">
+                <h3>Socket Test</h3>
+                <p id="temp"></p>
+            </div>
+            <div class="col-sm-3">
+                <h3>Send a message</h3>
+                <div class="form-group">                  
+                  <input class="form-control" id="msg"/>                                   
+                </div>
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary form-control" id="sendMsg">Send Message</button>
+                </div>
+                <p id="response"></p>
+            </div>
+        </div>
+    </div>
+<script>
+    $(document).ready(() => {
+        const socket = io('http://localhost:8084');
+        
+        socket.on('connection', socket => console.log(`New Connection ${socket}`));
+        socket.on('connected', socket => console.log(`Connected ${socket}`));
+        socket.on('disconnect', socket => console.log(`Disconnect ${socket}`));
+        
+        console.log('Connected with connection ID', socket.id);
+        socket.on('FromAPI', temp => {         
+           $('#temp').html(`Temperature at ${new Date().toGMTString()} is ${temp} &deg;C`);
+        });
+        
+        socket.on('pongMsg', response => {
+          console.log('pong:', response);
+          $('#response').text(`Response: ${response}`);          
+        });
+
+        $('#sendMsg').on('click', () => {
+          const msg = $('#msg').val();
+          console.log('ping:', msg)
+          socket.emit('pingMsg', msg);
+          $('#msg').val('');
+        });
+
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,7 @@
+const path = require('path');
+
+const configFile = process.env.NODE_ENV === 'production' ? 'production.json' : 'default.json';
+
+module.exports = {
+  'config': path.resolve('config', configFile),
+};
