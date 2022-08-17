@@ -4,7 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "nodemon ./bin/www",
-    "local": "export ENV=staging && npx serverless offline start"
+    "local": "export ENV=staging && npx serverless offline start",
+    "deploy": "serverless deploy --verbose",
+    "deploy:fast": "serverless deploy function --function api",
+    "deploy:live": "serverless deploy --stage production --region us-west-2",
+    "upload:fast": "serverless deploy --aws-s3-accelerate"
   },
   "dependencies": {
     "axios": "^0.21.0",

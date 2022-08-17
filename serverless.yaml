@@ -1,10 +1,15 @@
 org: tochukz
-app: pet-app
-service: pet-app
+service: serverless-bookapi
 frameworkVersion: '3'
 
 provider:
-  name: aws
+  name: aws 
+  deploymentMethod: direct 
+  deploymentBucket: 
+    name: bookapi-deploys-artifacts
+    versioning: false
+  stage: staging
+  region: eu-west-2
   runtime: nodejs14.x
 
 functions:

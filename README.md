@@ -15,7 +15,6 @@ $ npm install --save-dev serverless-offline
 __Add the serverless.yaml__  
 ```
 org: tochukz
-app: serverless-bookapp
 service: serverless-bookapp
 frameworkVersion: '3'
 
